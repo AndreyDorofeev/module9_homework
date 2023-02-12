@@ -1,0 +1,53 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form_input">
+        <p>Введите числa от 100 до 300:</p>
+        <input type="number" class="input_style1" >
+        <input type="number" class="input_style2" >
+        <input class="btn"type="submit">
+     </div>
+        <div class="result j-result"></div>
+</body>
+
+<script>
+    const btnNode = document.querySelector(".btn");
+    const resultNode = document.querySelector(".result");
+
+btnNode.addEventListener("click", async () => {
+  const checkInput = new Promise((resolve, reject) => {
+    debugger;
+    let pictureWidth = document.querySelector(".input_style1").value;
+    let pictureHeight = document.querySelector(".input_style2").value;
+    if (
+      +pictureWidth >= 100 &&
+      +pictureWidth <= 300 &&
+      +pictureHeight >= 100 &&
+      +pictureHeight <= 300
+    ) {
+      resolve({
+        width: +pictureWidth,
+        height: +pictureHeight
+      });
+    } else {
+      reject({
+        message: "Одно из чисел вне диапазона"
+      });
+    }
+  });
+  await checkInput
+    .then((result) => {
+      resultNode.innerHTML = `<img src="https://picsum.photos/${result.width}/${result.height}"/>`;
+    })
+    .catch((Error) => {
+      resultNode.innerHTML = `<span>${Error.message}</span>`;
+    });
+});
+</script>
+</html>

@@ -1,0 +1,67 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <div class="form_input">
+        <h2>Номер страницы</h2>
+        <input type="number" class="page" >
+        <h2>Лимит</h2>
+        <input type="number" class="limit" >
+        <h2>Запрос</h2>
+        <input type="submit" class="btn">
+     </div>
+        <div class="result j-result"></div>
+</body>
+
+<script>
+   const getPage = document.querySelector(".page");
+const getLimit = document.querySelector(".limit");
+const btnNode = document.querySelector(".btn");
+const resultNode = document.querySelector(".result");
+
+btnNode.addEventListener("click", async () => {
+const checkInput = new Promise((resolve, reject) => {
+debugger;
+    if (
+    getPage.value > 1 && getPage.value < 10);
+    else {
+        reject({
+            message: "Номер страницы вне диапазона от 1 до 10"
+         });
+    };
+    if (
+        getLimit.value > 1 && getLimit.value < 10);
+        else {
+        reject({
+            message: "Лимит вне диапазона от 1 до 10"
+    });
+    };  
+    if (
+        (getLimit.value > 1 && getLimit.value < 10) && (getPage.value > 1 && getPage.value < 10)) {
+          resolve({
+            getLimit: +getLimit.value,
+            getPage: +getPage.value   
+        });
+    } else {
+  reject({
+    message: "Номер страницы и лимит вне диапазона от 1 до 10"
+  });
+    };
+});
+
+await checkInput
+.then((result) => {
+  resultNode.innerHTML = `<img src="https://picsum.photos/v2/getlist?page=${result.getPage}&limit=${result.getLimit}">`;
+})
+.catch((Error) => {
+  resultNode.innerHTML = `<span>${Error.message}</span>`;
+});
+});
+localStorage.setItem("result", "getPage", "getLimit");
+</script>
+</html>
